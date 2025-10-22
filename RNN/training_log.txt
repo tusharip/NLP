@@ -53,3 +53,101 @@ Hyperparameters:
 
 Epoch 1/20 - Loss: 1.719242
 Epoch 2/20 - Loss: 1.614843
+
+============================================================
+Training started at: 2025-10-22 11:55:38
+Hyperparameters:
+  - Epochs: 20
+  - Context length: 100
+  - Vocab size: 65
+  - Batch size: 64
+  - Hidden size: 512
+  - Layers: 3
+  - Learning rate: 0.0001
+============================================================
+
+
+============================================================
+Training started at: 2025-10-22 11:56:21
+Hyperparameters:
+  - Epochs: 20
+  - Context length: 100
+  - Vocab size: 65
+  - Batch size: 64
+  - Hidden size: 512
+  - Layers: 3
+  - Learning rate: 0.0001
+============================================================
+
+
+============================================================
+Training started at: 2025-10-22 11:56:52
+Hyperparameters:
+  - Epochs: 20
+  - Context length: 100
+  - Vocab size: 65
+  - Batch size: 64
+  - Hidden size: 512
+  - Layers: 3
+  - Learning rate: 0.0001
+============================================================
+
+
+============================================================
+Training started at: 2025-10-22 12:04:44
+Hyperparameters:
+  - Epochs: 20
+  - Context length: 100
+  - Vocab size: 65
+  - Batch size: 64
+  - Hidden size: 512
+  - Layers: 3
+  - Learning rate: 0.0001
+============================================================
+
+
+============================================================
+Training started at: 2025-10-22 12:12:47
+Hyperparameters:
+  - Epochs: 20
+  - Context length: 100
+  - Vocab size: 65
+  - Batch size: 64
+  - Hidden size: 512
+  - Layers: 3
+  - Learning rate: 0.0001
+============================================================
+
+
+============================================================
+Training started at: 2025-10-22 12:44:58
+Hyperparameters:
+  - Epochs: 20
+  - Context length: 100
+  - Vocab size: 65
+  - Batch size: 64
+  - Hidden size: 512
+  - Layers: 3
+  - Learning rate: 0.0001
+============================================================
+
+
+============================================================
+Training started at: 2025-10-22 12:45:19
+Hyperparameters:
+  - Epochs: 20
+  - Context length: 100
+  - Vocab size: 65
+  - Batch size: 64
+  - Hidden size: 512
+  - Layers: 3
+  - Learning rate: 0.0001
+============================================================
+
+Epoch 1/20 - Loss: 1.574305
+Epoch 2/20 - Loss: 1.563905
+  >>> NEW BEST MODEL - Epoch 2, Loss: 1.563905
+Epoch 3/20 - Loss: 1.552529
+  >>> NEW BEST MODEL - Epoch 3, Loss: 1.552529
+Epoch 4/20 - Loss: 1.544052
+  >>> NEW BEST MODEL - Epoch 4, Loss: 1.544052

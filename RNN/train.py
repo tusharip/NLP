@@ -27,7 +27,7 @@ learning_rate = 0.0001
 # Load data & define model
 loader = DataLoader(
     CharStreamDataset(data_stream, context_len, vocab_size, device),
-    batch_size=batch_size,
+    batch_size=batch_size, drop_last=True,
 )
 model = CharRNN(vocab_size, hidden_size, no_of_layers).to(device)
 optimizer = torch.optim.Adam(model.parameters(), learning_rate)
@@ -60,20 +60,27 @@ with open(log_file, "a") as f:
 
 for epoch in range(num_epochs):
     total_loss = 0
+    hidden = None
     for batch_idx, (x, y) in enumerate(loader):
         x, y = x.to(device), y.to(device)
         optimizer.zero_grad()
-        pred, h = model(x)
+        pred, hidden = model(x, hidden)
 
         # convert one-hot target to indices
         y_reshaped = y.argmax(dim=-1).reshape(-1)
         pred_reshaped = pred.reshape(-1, vocab_size)
 
+        #(N, C), (N,)
         loss = criterion(pred_reshaped, y_reshaped)
         loss.backward()
 
         nn.utils.clip_grad_norm_(model.parameters(), max_norm=5)
         optimizer.step()
+
+        # DETACH to prevent backprop through entire epoch
+        # this prevents gradient flow to previous batches 
+        if hidden is not None:
+            hidden = [h.detach() for h in hidden]
 
         total_loss += loss.item()
         if batch_idx % 1000 == 0:
