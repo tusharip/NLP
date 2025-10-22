@@ -6,7 +6,7 @@ from model import CharRNN
 
 @torch.no_grad()
 def generate(
-    model, seed_text, char2int, int2char, vocab_size, gen_len=50, device="cuda"
+    model, seed_text, char2int, int2char, vocab_size, gen_len=50, temperature=0.5, device="cuda"
 ):
     model.eval()
     input_idx = [char2int[c] for c in seed_text]
@@ -23,7 +23,7 @@ def generate(
 
     for _ in range(gen_len):
         out, hidden = model(next_input, hidden)
-        probs = F.softmax(out[:, -1, :], dim=-1)
+        probs = F.softmax(out[:, -1, :] / temperature, dim=-1)
         next_idx = torch.multinomial(probs, num_samples=1).item()
         next_char = int2char[next_idx]
         generated.append(next_char)
@@ -35,27 +35,25 @@ def generate(
 
 
 if __name__ == "__main__":
-    # Load data
-    lines = open("../Datasets/transformer.txt", "r").readlines()
-    data_stream = []
-    for line in lines:
-        cleaned_line = line.strip()  # remove leading/trailing whitespace
-        for char in cleaned_line:
-            data_stream.append(char)
-        chars = sorted(set(data_stream))  # data_stream = your 5 lakh characters
-
-    char2int = {c: i for i, c in enumerate(chars)}
-    int2char = {i: c for i, c in enumerate(chars)}
     device = "mps"
-    vocab_size = 25
-    hidden_size = 256
+    vocab_size = 65
+    hidden_size = 512
     no_of_layers = 3
 
     model = CharRNN(vocab_size, hidden_size, no_of_layers).to(device)
     epoch, loss = load_checkpoint(model, None, "best_char_rnn.pt", device)
 
-    seed_text = "transformer "
+
+    # Load data
+    with open("../Datasets/shakespear.txt", "r") as f:
+        text = f.read()
+    data_stream = list(text)
+    chars = sorted(set(data_stream))
+    char2int = {c: i for i, c in enumerate(chars)}
+    int2char = {i: c for i, c in enumerate(chars)}
+
+    seed_text = "SEBASTIAN"
     generated_text = generate(
-        model, seed_text, char2int, int2char, vocab_size, gen_len=1000, device=device
+        model, seed_text, char2int, int2char, vocab_size, gen_len=2000, temperature=0.8, device=device
     )
     print("Generated text:", generated_text)

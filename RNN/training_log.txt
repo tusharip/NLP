@@ -1,0 +1,55 @@
+============================================================
+Training started at: 2025-10-21 23:24:22
+Hyperparameters:
+  - Epochs: 20
+  - Context length: 100
+  - Vocab size: 65
+  - Batch size: 64
+  - Hidden size: 512
+  - Layers: 3
+  - Learning rate: 0.0005
+============================================================
+
+Epoch 1/20 - Loss: 1.889978
+  >>> NEW BEST MODEL - Epoch 1, Loss: 1.889978
+Epoch 2/20 - Loss: 1.722581
+  >>> NEW BEST MODEL - Epoch 2, Loss: 1.722581
+Epoch 3/20 - Loss: 1.665418
+  >>> NEW BEST MODEL - Epoch 3, Loss: 1.665418
+Epoch 4/20 - Loss: 1.630167
+  >>> NEW BEST MODEL - Epoch 4, Loss: 1.630167
+Epoch 5/20 - Loss: 1.603758
+  >>> NEW BEST MODEL - Epoch 5, Loss: 1.603758
+Epoch 6/20 - Loss: 1.583763
+  >>> NEW BEST MODEL - Epoch 6, Loss: 1.583763
+Epoch 7/20 - Loss: 1.567091
+  >>> NEW BEST MODEL - Epoch 7, Loss: 1.567091
+Epoch 8/20 - Loss: 2.034021
+
+============================================================
+Training started at: 2025-10-22 10:13:32
+Hyperparameters:
+  - Epochs: 20
+  - Context length: 100
+  - Vocab size: 65
+  - Batch size: 64
+  - Hidden size: 512
+  - Layers: 3
+  - Learning rate: 0.0001
+============================================================
+
+
+============================================================
+Training started at: 2025-10-22 10:15:59
+Hyperparameters:
+  - Epochs: 20
+  - Context length: 100
+  - Vocab size: 65
+  - Batch size: 64
+  - Hidden size: 512
+  - Layers: 3
+  - Learning rate: 0.0001
+============================================================
+
+Epoch 1/20 - Loss: 1.719242
+Epoch 2/20 - Loss: 1.614843

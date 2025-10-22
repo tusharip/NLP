@@ -66,23 +66,49 @@ batch_size = 64      # Training batch size
 ## 🎯 Demo Output
 
 ```
-a attention allows the model to capture different types of relationships 
-transformers replace recurrent networks with self attention layers scaled dot 
-product attention computes attention scores efficiently the decoder generates 
-the output sequence autoregressively residual connections help gradients flow 
-in deep networks the encoder reads the input sequence and produces hidden 
-representations layer normalization stabilizes training of transformers position 
-encoding provides information about token order transformers replace recurrent 
-networks with self attention layers multi head attention allows the model to 
-capture different types of relationships position encoding provides information 
-about token order residual connections help gradients flow in deep networks 
-transformers replace recurrent networks with self attention layers transformers 
-replace recurrent networks with self attention layers attention allows the model 
-to focus on important parts of the input feed forward networks transform the 
-representation between attention layers feed forward networks transform the 
-representation between attention layers the decoder generates the output sequence 
-autoregressively scaled dot product attention computes attention scores efficiently 
-transformers replace recurrent networks
+SEBASTIAN:
+Not it
+Would I be mightnister, go itselves I should she, and shall sit hear doth speak
+Them?
+
+SEBASTIAN:
+It dost them they think should shore: sot shall such ate thy fiut them, sir, it:
+What dost your sons.
+
+ANTONIO:
+Nex again and thing they sleep in my affeclan to seen in they fealts at the quitting.
+
+ALONSO:
+Whear-daugh;--strike o' the duke: betterstintty you as yetermeds so. Why, sir, foul son me this arms thy formwectorby a drumpets then speak thou stoop you the subjectne. The armiom of Mestant as not ninetant he loudy that suldnesseliak.
+
+ADRIAN:
+Not didst sholl sleeps
+Didst should not that blother.
+
+SEBASTIAN:
+Lord, I should swore they not sweet did her laughark asly straight; I that least,
+Not should, thee.
+
+SEBASTIAN:
+What lost at the tribe thee there speak; thy vantly all as a kess at thou dug they stranger
+Spilents your trift fresh gonits the wory sure speak the spiss at your senian, they then the quelo, I do: they but discalous here of hath idmore. Why, by your seed, they your Does and
+Them and she done. What speak miethy to a disperlod asky, and of a scrangey are the mouth'd I shall.
+Thenctions
+My brighty thank they the ssactise them, this some speak I am sight so sension thy brother should.
+
+ANTONIO:
+No, sir, Arm you findy talkin Dety
+We satised sir, the lord, art
+Deterness, that the gallentister
+With son: it strangeney doth deself, I set it my signious first speak me: send are heavy
+Thee fear you?
+
+ANTONIO:
+Nor nevereth meetless. The spoke so, and thing the block, compless sallaster they spetch'd he drease upode yet and speak as all beur slyselve that I speak on't!
+
+ANTONIO:
+None the sumper, free---Widrit
+Should I your farther ashatter this sacry thou art as do it.
 ```
 
 ## 📚 References
