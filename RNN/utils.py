@@ -2,11 +2,10 @@ import torch
 from torch.utils.data import Dataset, DataLoader
 
 class CharStreamDataset(Dataset):
-    def __init__(self, dataset, context_len, vocab_size, device):
+    def __init__(self, dataset, context_len, vocab_size, char2int, device):
         self.context_len = context_len
         self.vocab_size = vocab_size # 26chars(max)
-        self.chars = sorted(set(dataset))
-        self.char2int = { c: i for i, c in enumerate(self.chars)}
+        self.char2int = char2int
         self.dataset = torch.tensor([self.char2int[c] for c in dataset], device=device)
         self.one_hot_embed = torch.eye(self.vocab_size, device=device)
 

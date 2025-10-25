@@ -6,29 +6,46 @@ from model import CharRNN
 from datetime import datetime
 import os
 
+log_file = "training_log.txt"
 
 # Load data
 with open("../Datasets/shakespear.txt", "r") as f:
     text = f.read()
-data_stream = list(text)
 
+# Create SHARED vocabulary from ALL text
+all_chars = sorted(set(text))
+char2int = {c: i for i, c in enumerate(all_chars)}
+vocab_size = len(all_chars)
+
+# 90% train , 10% val
+split_index = int(len(text) * 0.9)
+train_text = list(text[:split_index])
+val_text = list(text[split_index:])
+# data_stream = list(text)
 
 # config hyperparameters...
 device = "mps"
 num_epochs = 20
 context_len = 100
-vocab_size = len(set(data_stream))
+vocab_size = len(set(train_text + val_text))
 batch_size = 64
 hidden_size = 512
 no_of_layers = 3
-learning_rate = 0.0001
+learning_rate = 0.001
 
 
 # Load data & define model
-loader = DataLoader(
-    CharStreamDataset(data_stream, context_len, vocab_size, device),
-    batch_size=batch_size, drop_last=True,
+train_loader = DataLoader(
+    CharStreamDataset(train_text, context_len, vocab_size, char2int, device),
+    batch_size=batch_size,
+    drop_last=True,
 )
+val_loader = DataLoader(
+    CharStreamDataset(val_text, context_len, vocab_size, char2int, device),
+    batch_size=batch_size,
+    drop_last=True,
+)
+
 model = CharRNN(vocab_size, hidden_size, no_of_layers).to(device)
 optimizer = torch.optim.Adam(model.parameters(), learning_rate)
 criterion = nn.CrossEntropyLoss()
@@ -44,7 +61,6 @@ else:
     best_loss = float("inf")
 
 
-log_file = "training_log.txt"
 with open(log_file, "a") as f:
     f.write(f"\n{'='*60}\n")
     f.write(f"Training started at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
@@ -59,9 +75,10 @@ with open(log_file, "a") as f:
     f.write(f"{'='*60}\n\n")
 
 for epoch in range(num_epochs):
-    total_loss = 0
+    model.train()
+    avg_train_loss = 0
     hidden = None
-    for batch_idx, (x, y) in enumerate(loader):
+    for batch_idx, (x, y) in enumerate(train_loader):
         x, y = x.to(device), y.to(device)
         optimizer.zero_grad()
         pred, hidden = model(x, hidden)
@@ -70,7 +87,7 @@ for epoch in range(num_epochs):
         y_reshaped = y.argmax(dim=-1).reshape(-1)
         pred_reshaped = pred.reshape(-1, vocab_size)
 
-        #(N, C), (N,)
+        # (N, C), (N,)
         loss = criterion(pred_reshaped, y_reshaped)
         loss.backward()
 
@@ -78,29 +95,55 @@ for epoch in range(num_epochs):
         optimizer.step()
 
         # DETACH to prevent backprop through entire epoch
-        # this prevents gradient flow to previous batches 
+        # this prevents gradient flow to previous batches
         if hidden is not None:
             hidden = [h.detach() for h in hidden]
 
-        total_loss += loss.item()
+        avg_train_loss += loss.item()
         if batch_idx % 1000 == 0:
             print(f"epoch - {epoch} batch {batch_idx} Loss : {loss.item():.4}")
-    total_loss = total_loss / len(loader)
-    print(f"{epoch + 1} Total Loss : {total_loss:.4}")
+    avg_train_loss = avg_train_loss / len(train_loader)
+    print(f"{epoch + 1} Total Loss : {avg_train_loss:.4}")
 
-    # Log epoch results
+    # validation phase
+    model.eval()
+    val_loss = 0
+    hidden = None
+    with torch.no_grad():
+        for x, y in val_loader:
+            pred, hidden = model(x, hidden)
+            y_reshaped = y.argmax(dim=-1).reshape(-1)
+            pred_reshaped = pred.reshape(-1, vocab_size)
+
+            loss = criterion(pred_reshaped, y_reshaped)
+            val_loss += loss.item()
+
+            if hidden is not None:
+                hidden = [h.detach() for h in hidden]
+
+    avg_val_loss = val_loss / len(val_loader)
+
+    # Print epoch summary
+    print(f"\n{'='*60}")
+    print(f"Epoch {epoch + 1}/{num_epochs}")
+    print(f"  Train Loss: {avg_train_loss:.4f}")
+    print(f"  Val Loss:   {avg_val_loss:.4f}")
+    print(f"{'='*60}\n")
+
+    # Log results
     with open(log_file, "a") as f:
-        f.write(f"Epoch {epoch + 1}/{num_epochs} - Loss: {total_loss:.6f}\n")
+        f.write(
+            f"Epoch {epoch + 1}/{num_epochs} - Train: {avg_train_loss:.6f}, Val: {avg_val_loss:.6f}\n"
+        )
 
-    if total_loss < best_loss:
-        best_loss = total_loss
+    # Save best model based on VALIDATION loss
+    if avg_val_loss < best_loss:
+        best_loss = avg_val_loss
         save_checkpoint(model, optimizer, epoch, best_loss, "best_char_rnn.pt")
 
-        # Log best model save
         with open(log_file, "a") as f:
-            f.write(
-                f"  >>> NEW BEST MODEL - Epoch {epoch + 1}, Loss: {best_loss:.6f}\n"
-            )
+            f.write(f"  >>> NEW BEST MODEL - Val Loss: {best_loss:.6f}\n")
+
 
 # Log training completion
 with open(log_file, "a") as f:
