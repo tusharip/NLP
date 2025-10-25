@@ -1,0 +1,21 @@
+============================================================
+Training started at: 2025-10-25 15:51:30
+Hyperparameters:
+  - Epochs: 20
+  - Context length: 100
+  - Vocab size: 65
+  - Batch size: 64
+  - Hidden size: 256
+  - Layers: 2
+  - Learning rate: 0.001
+============================================================
+
+Epoch 1/20 - Train: 1.659696, Val: 1.605169
+  >>> NEW BEST MODEL - Val Loss: 1.605169
+Epoch 2/20 - Train: 1.399586, Val: 1.543229
+  >>> NEW BEST MODEL - Val Loss: 1.543229
+Epoch 3/20 - Train: 1.333020, Val: 1.528535
+  >>> NEW BEST MODEL - Val Loss: 1.528535
+Epoch 4/20 - Train: 1.293717, Val: 1.525215
+  >>> NEW BEST MODEL - Val Loss: 1.525215
+Epoch 5/20 - Train: 1.266546, Val: 1.529006
